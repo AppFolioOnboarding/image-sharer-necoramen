@@ -1,4 +1,8 @@
 class ImagesController < ApplicationController
+  def index
+    redirect_to root_path
+  end
+
   def new
     @image = Image.new
   end
