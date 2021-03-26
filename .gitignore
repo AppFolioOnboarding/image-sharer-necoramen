@@ -26,3 +26,7 @@ node_modules
 /public/packs-test
 /node_modules
 .idea/
+
+.DS_Store
+
+vendor/bundle/
