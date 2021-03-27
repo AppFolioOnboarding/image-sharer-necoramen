@@ -1,0 +1,14 @@
+<h1>Submit a new link</h1>
+
+<%= form_with model: @image do |form| %>
+  <div>
+    <%= form.label 'Please paste your link here' %><br>
+    <%= form.text_field :url %>
+    <% @image.errors.full_messages_for(:url).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
