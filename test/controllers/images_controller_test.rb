@@ -28,9 +28,9 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select('h1', "Showing image #{image.id}")
     assert_select('img[src=?]', valid_url)
-    assert_select('span', "\##{tag1}")
-    assert_select('span', "\##{tag2}")
-    assert_select('span', "\##{tag3}")
+    assert_select('a[href=?]', "/tag/#{tag1}")
+    assert_select('a[href=?]', "/tag/#{tag2}")
+    assert_select('a[href=?]', "/tag/#{tag3}")
   end
 
   test 'create an image with valid url' do
@@ -52,6 +52,22 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_select('img[src=?]', valid_url)
+  end
+
+  test 'show images by tag' do
+    url1 = "#{valid_url}1"
+    url2 = "#{valid_url}2"
+    url3 = "#{valid_url}3"
+
+    Image.create!(url: url1, tag_list: [tag1, tag2])
+    Image.create!(url: url2, tag_list: [tag2, tag3])
+    Image.create!(url: url3, tag_list: [tag3, tag1])
+
+    get "/tag/#{tag1}"
+    assert_response :ok
+    assert_select('img[src=?]', url1)
+    assert_select('img[src=?]', url3)
+    assert_select('img[src=?]', url2, count: 0)
   end
 
   test 'visit index path of images' do
