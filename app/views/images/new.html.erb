@@ -9,6 +9,10 @@
     <% end %>
   </div>
   <div>
+    <%= form.label 'Please input tags you like for this image, separated by \',\'' %><br>
+    <%= form.text_field :tag_list %>
+  </div>
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
