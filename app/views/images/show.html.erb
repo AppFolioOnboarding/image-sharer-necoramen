@@ -1,3 +1,13 @@
 <h1>Showing image <%= @image.id %></h1>
 
-<img src="<%= @image.url%>"/>
+<span>Tags:</span>
+<% if  @image.tags.length == 0%>
+  <p>No tag is available for this image.</p>
+<% else %>
+  <% @image.tags.each do |tag| %>
+    <span>#<%= tag %></span>
+  <% end %>
+<% end %>
+<br>
+
+<img src="<%= @image.url%>" width="600"/>

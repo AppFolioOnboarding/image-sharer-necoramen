@@ -21,6 +21,18 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select('img[src=?]', valid_url)
   end
 
+  test 'display an image with tags' do
+    image = Image.create!(url: valid_url, tag_list: [tag1, tag2, tag3])
+    assert_equal(image.id.nil?, false)
+    get image_path(image)
+    assert_response :ok
+    assert_select('h1', "Showing image #{image.id}")
+    assert_select('img[src=?]', valid_url)
+    assert_select('span', "\##{tag1}")
+    assert_select('span', "\##{tag2}")
+    assert_select('span', "\##{tag3}")
+  end
+
   test 'create an image with valid url' do
     post '/images', params: { image: { url: valid_url } }
     assert_response :redirect
