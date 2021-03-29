@@ -16,6 +16,10 @@ class ImagesController < ApplicationController
     end
   end
 
+  def index
+    redirect_to root_path
+  end
+
   private
 
   def image_params
