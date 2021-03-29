@@ -5,6 +5,8 @@ class ImagesController < ApplicationController
 
   def show
     @image = Image.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path
   end
 
   def show_by_tag
