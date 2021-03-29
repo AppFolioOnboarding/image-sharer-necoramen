@@ -7,6 +7,11 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
   end
 
+  def show_by_tag
+    @tag = params[:tag]
+    @images = Image.tagged_with(@tag)
+  end
+
   def create
     @image = Image.new(image_params)
     if @image.save

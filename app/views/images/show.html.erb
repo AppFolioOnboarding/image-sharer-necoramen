@@ -5,7 +5,7 @@
   <p>No tag is available for this image.</p>
 <% else %>
   <% @image.tags.each do |tag| %>
-    <span>#<%= tag %></span>
+    <a href="/tag/<%= tag %>">#<%= tag %></a>
   <% end %>
 <% end %>
 <br>
