@@ -31,4 +31,11 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select('div', 'Url is not a valid URL')
   end
+
+  test 'visit index path of images' do
+    get images_path
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_select('h1', 'Home')
+  end
 end
