@@ -6,20 +6,23 @@ else
 end
 AddMissingIndexesOnTaggings.class_eval do
   def change
-    add_index ActsAsTaggableOn.taggings_table, :tag_id unless index_exists? ActsAsTaggableOn.taggings_table, :tag_id
-    add_index ActsAsTaggableOn.taggings_table, :taggable_id unless index_exists? ActsAsTaggableOn.taggings_table, :taggable_id
-    add_index ActsAsTaggableOn.taggings_table, :taggable_type unless index_exists? ActsAsTaggableOn.taggings_table, :taggable_type
-    add_index ActsAsTaggableOn.taggings_table, :tagger_id unless index_exists? ActsAsTaggableOn.taggings_table, :tagger_id
-    add_index ActsAsTaggableOn.taggings_table, :context unless index_exists? ActsAsTaggableOn.taggings_table, :context
+    add_index_unless_exists :tag_id
+    add_index_unless_exists :taggable_id
+    add_index_unless_exists :taggable_type
+    add_index_unless_exists :tagger_id
+    add_index_unless_exists :context
+    add_index_unless_exists %i[tagger_id tagger_type]
 
-    unless index_exists? ActsAsTaggableOn.taggings_table, %i[tagger_id tagger_type]
-      add_index ActsAsTaggableOn.taggings_table, %i[tagger_id tagger_type]
-    end
+    add_index_with_name_unless_exists %i[taggable_id taggable_type tagger_id context], 'taggings_idy'
+  end
 
-    if index_exists? ActsAsTaggableOn.taggings_table, %i[taggable_id taggable_type tagger_id context], name: 'taggings_idy'
-      return
-    end
+  def add_index_unless_exists(col)
+    add_index ActsAsTaggableOn.taggings_table, col unless index_exists? ActsAsTaggableOn.taggings_table, col
+  end
 
-    add_index ActsAsTaggableOn.taggings_table, %i[taggable_id taggable_type tagger_id context], name: 'taggings_idy'
+  def add_index_with_name_unless_exists(col, name)
+    return if index_exists? ActsAsTaggableOn.taggings_table, col, name: name
+
+    add_index ActsAsTaggableOn.taggings_table, col, name: name
   end
 end

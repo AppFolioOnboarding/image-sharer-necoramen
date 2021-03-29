@@ -11,6 +11,14 @@ ActsAsTaggableOnMigration.class_eval do
       t.timestamps
     end
 
+    create_tagging_table
+
+    add_index ActsAsTaggableOn.taggings_table, :tag_id
+    add_index ActsAsTaggableOn.taggings_table, %i[taggable_id taggable_type context],
+              name: 'taggings_taggable_context_idx'
+  end
+
+  def self.create_tagging_table
     create_table ActsAsTaggableOn.taggings_table do |t|
       t.references :tag, foreign_key: { to_table: ActsAsTaggableOn.tags_table }
 
@@ -25,10 +33,6 @@ ActsAsTaggableOnMigration.class_eval do
 
       t.datetime :created_at
     end
-
-    add_index ActsAsTaggableOn.taggings_table, :tag_id
-    add_index ActsAsTaggableOn.taggings_table, %i[taggable_id taggable_type context],
-              name: 'taggings_taggable_context_idx'
   end
 
   def self.down
