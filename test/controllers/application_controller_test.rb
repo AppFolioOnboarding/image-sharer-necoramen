@@ -13,4 +13,15 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_response :ok
   end
+
+  test 'display all images on homepage' do
+    url1 = 'https://google.com'
+    url2 = 'https://appfolio.com'
+    Image.create!(url: url1)
+    Image.create!(url: url2)
+    get root_path
+    assert_response :ok
+    assert_select('img[src=?]', url1)
+    assert_select('img[src=?]', url2)
+  end
 end
