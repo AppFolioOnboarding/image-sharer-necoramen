@@ -2,7 +2,9 @@
 <a href="/images/new">Submit a new link</a><br>
 
 <% @images.reverse_each do |image| %>
-  <img src="<%= image.url %>" width="400">
+  <a href="<%= image_path(image) %>">
+    <img src="<%= image.url %>" width="400">
+  </a>
   <p><%= image.id %>
     <% image.tags.each do |tag| %>
       <a href="/tag/<%= tag %>">#<%= tag %></a>

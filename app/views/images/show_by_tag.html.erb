@@ -1,8 +1,9 @@
 <h1>Images with tag #<%= @tag %></h1>
 
 <% @images.reverse_each do |image| %>
-  <img src="<%= image.url %>" width="400">
-
+  <a href="<%= image_path(image) %>">
+    <img src="<%= image.url %>" width="400">
+  </a>
   <% image.tags.each do |tag| %>
     <a href="/tag/<%= tag %>">#<%= tag %></a>
   <% end %>
