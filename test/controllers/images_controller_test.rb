@@ -76,4 +76,16 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_select('h1', 'Home')
   end
+
+  test 'delete an existing image' do
+    image = Image.create!(url: valid_url, tag_list: [tag1, tag2])
+    get image_path(image)
+    assert_response :ok
+
+    delete image_path(image)
+    assert_redirected_to root_path
+
+    get image_path(image)
+    assert_redirected_to root_path
+  end
 end
