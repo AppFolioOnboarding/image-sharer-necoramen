@@ -17,7 +17,7 @@ class ImagesController < ApplicationController
   end
 
   def index
-    redirect_to root_path
+    @images = Image.all
   end
 
   private
