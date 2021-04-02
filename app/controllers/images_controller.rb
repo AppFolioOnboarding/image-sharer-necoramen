@@ -17,7 +17,8 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @images = Image.all
+    @tag = params[:tag]
+    @images = @tag.nil? ? Image.all : Image.tagged_with(@tag)
   end
 
   private
