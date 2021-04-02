@@ -79,4 +79,13 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_select('img[src=?]', url1)
     assert_select('img[src=?]', url2)
   end
+
+  test 'delete an existing image' do
+    image = Image.create!(url: valid_url, tag_list: [tag1, tag2])
+    get image_path(image)
+    assert_response :ok
+
+    delete image_path(image)
+    assert_redirected_to images_path
+  end
 end
