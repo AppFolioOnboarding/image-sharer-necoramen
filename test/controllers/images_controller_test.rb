@@ -28,9 +28,24 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select('h1', "Showing image #{image.id}")
     assert_select('img[src=?]', valid_url)
-    assert_select('.image-tag', "\##{tag1}")
-    assert_select('.image-tag', "\##{tag2}")
-    assert_select('.image-tag', "\##{tag3}")
+    [tag1, tag2, tag3].each do |tag|
+      assert_select('.image-tag[href=?]', images_path(tag: tag), { text: "\##{tag}" })
+    end
+  end
+
+  test 'show images by tag' do
+    url1 = "#{valid_url}1"
+    url2 = "#{valid_url}2"
+    url3 = "#{valid_url}3"
+    Image.create!(url: url1, tag_list: [tag1, tag2])
+    Image.create!(url: url2, tag_list: [tag2, tag3])
+    Image.create!(url: url3, tag_list: [tag3, tag1])
+
+    get images_path(tag: tag1)
+    assert_response :ok
+    assert_select('img[src=?]', url1)
+    assert_select('img[src=?]', url3)
+    assert_select('img[src=?]', url2, count: 0)
   end
 
   test 'create an image with valid url' do
@@ -55,9 +70,13 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'visit index path of images' do
+    url1 = 'https://google.com'
+    url2 = 'https://appfolio.com'
+    Image.create!(url: url1)
+    Image.create!(url: url2)
     get images_path
-    assert_redirected_to root_path
-    follow_redirect!
     assert_response :ok
+    assert_select('img[src=?]', url1)
+    assert_select('img[src=?]', url2)
   end
 end

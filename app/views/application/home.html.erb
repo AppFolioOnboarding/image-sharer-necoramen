@@ -1,7 +1,0 @@
-<h1>Home</h1>
-<a href="/images/new">Submit a new link</a><br>
-
-<% @images.reverse_each do |image| %>
-  <img src="<%= image.url %>" width="400">
-  <p><%= image.id %></p>
-<% end %>

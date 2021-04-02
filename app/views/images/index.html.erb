@@ -1,0 +1,24 @@
+<h1>Home</h1>
+<a href="/images/new">Submit a new link</a><br>
+
+<% if @tag && @images.empty? %>
+  <p>No image includes the tag #<%= @tag %>. <a href="<%= images_path %>">All images</a></p>
+<% else %>
+  <% if @tag %>
+    <p>Showing images with tag #<%= @tag %>. <a href="<%= images_path %>">All images</a></p>
+  <% else %>
+    <p>Showing all images.</p>
+  <% end %>
+  <% @images.reverse_each do |image| %>
+    <a href="<%= image_path(image) %>">
+      <img src="<%= image.url %>" width="400">
+    </a>
+    <% image.tags.each do |tag| %>
+      <a href="<%= images_path(tag: tag.name) %>" class="image-tag">#<%= tag %></a>
+    <% end %>
+    <br>
+  <% end %>
+<% end %>
+
+
+
