@@ -6,11 +6,12 @@ module PageObjects
       end
 
       def tags
-        # TODO
+        node.all('.image-tag').map(&:text).map { |t| t[1...t.length] }
       end
 
       def click_tag!(tag_name)
-        # TODO
+        node.all('.image-tag').find { |tag| tag.text == "##{tag_name}" }.click
+        window.change_to(IndexPage)
       end
     end
   end

@@ -1,5 +1,9 @@
 <h1>Home</h1>
-<a href="/images/new">Submit a new link</a><br>
+<a href="<%= new_image_path %>">New Image</a><br>
+
+<% flash.each do |type, message| %>
+  <div class="js-flash-<%= type %>"><%= message %></div>
+<% end %>
 
 <% if @tag && @images.empty? %>
   <p>No image includes the tag #<%= @tag %>. <a href="<%= images_path %>">All images</a></p>
@@ -9,15 +13,20 @@
   <% else %>
     <p>Showing all images.</p>
   <% end %>
-  <% @images.reverse_each do |image| %>
-    <a href="<%= image_path(image) %>">
-      <img src="<%= image.url %>" width="400">
-    </a>
-    <% image.tags.each do |tag| %>
-      <a href="<%= images_path(tag: tag.name) %>" class="image-tag">#<%= tag %></a>
+
+  <div class="image-card-list">
+    <% @images.reverse_each do |image| %>
+      <div class="image-card">
+        <a href="<%= image_path(image) %>" class="image-link">
+          <img src="<%= image.url %>" width="400">
+        </a>
+        <% image.tags.each do |tag| %>
+          <a href="<%= images_path(tag: tag.name) %>" class="image-tag">#<%= tag %></a>
+        <% end %>
+        <br>
+      </div>
     <% end %>
-    <br>
-  <% end %>
+  </div>
 <% end %>
 
 

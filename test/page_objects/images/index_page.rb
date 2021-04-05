@@ -3,9 +3,10 @@ module PageObjects
     class IndexPage < PageObjects::Document
       path :images
 
-      collection :images, locator: '#TODO', item_locator: '#TODO', contains: ImageCard do
+      collection :images, locator: '.image-card-list', item_locator: '.image-card', contains: ImageCard do
         def view!
-          # TODO
+          node.find('.image-link').click
+          window.change_to(ShowPage)
         end
       end
 
@@ -15,11 +16,12 @@ module PageObjects
       end
 
       def showing_image?(url:, tags: nil)
-        # TODO
+        images.any? { |image| image.url == url && (tags.nil? || image.tags.sort == tags.sort) }
       end
 
       def clear_tag_filter!
-        # TODO
+        node.click_on('All images')
+        window.change_to(IndexPage)
       end
     end
   end

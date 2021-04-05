@@ -59,7 +59,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
   test 'create an image with invalid url' do
     post '/images', params: { image: { url: invalid_url } }
     assert_response :ok
-    assert_select('.image-error-message', 'Url is not a valid URL')
+    assert_select('.image-error-message', 'must be a valid URL')
   end
 
   test 'submit an image with tags' do

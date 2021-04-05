@@ -1,16 +1,19 @@
 <h1>Submit a new link</h1>
 
-<%= form_with model: @image do |form| %>
+<%= form_for @image, html: { class: 'form-group' } do |form| %>
   <div>
     <%= form.label 'Please paste your link here' %><br>
-    <%= form.text_field :url %>
-    <% @image.errors.full_messages_for(:url).each do |message| %>
-      <div class="image-error-message"><%= message %></div>
-    <% end %>
+    <%= form.text_field :url, id: 'image_url' %>
+    <ul class="help-block">
+      <% @image.errors.messages[:url].each do |message| %>
+        <div class="image-error-message"><%= message %></div>
+      <% end %>
+    </ul>
+
   </div>
   <div>
     <%= form.label 'Please input tags you like for this image, separated by \',\'' %><br>
-    <%= form.text_field :tag_list %>
+    <%= form.text_field :tag_list, value: form.object.tag_list.join(",") %>
   </div>
   <div>
     <%= form.submit %>

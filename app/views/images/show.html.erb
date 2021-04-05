@@ -1,5 +1,9 @@
 <h1>Showing image <%= @image.id %></h1>
 
+<% flash.each do |type, message| %>
+  <div class="js-flash-<%= type %>"><%= message %></div>
+<% end %>
+
 <span>Tags:</span>
 <% if @image.tags.empty? %>
   <p>No tag is available for this image.</p>
@@ -16,3 +20,4 @@
 <br>
 
 <img src="<%= @image.url%>" width="600"/>
+<a href="<%= images_path %>" class="js-link-home">&lt;Home</a>

@@ -10,7 +10,7 @@ class ImagesController < ApplicationController
   def create
     @image = Image.new(image_params)
     if @image.save
-      redirect_to @image
+      redirect_to @image, success: 'You have successfully added an image.'
     else
       render :new
     end
@@ -24,7 +24,7 @@ class ImagesController < ApplicationController
   def destroy
     @image = Image.find(params[:id])
     @image.destroy
-    redirect_to images_path
+    redirect_to images_path, success: 'You have successfully deleted the image.'
   end
 
   private
