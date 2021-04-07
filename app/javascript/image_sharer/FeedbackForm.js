@@ -8,7 +8,7 @@ export class FeedbackForm extends React.Component {
         <br />
         <h3>Tell us what you think</h3>
         <form className="form-group" acceptCharset="UTF-8" method="post">
-          <label id="feedback-username-id" htmlFor="feedback-username">
+          <label htmlFor="feedback-username">
             Your name:
             <br />
             <input id="feedback-username" onChange={this.updateUserName} value={this.props.feedbackStore.userName} />
