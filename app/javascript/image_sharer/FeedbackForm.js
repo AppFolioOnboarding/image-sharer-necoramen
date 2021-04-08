@@ -1,7 +1,8 @@
 import React from 'react';
-import { observer, inject } from 'mobx-react';
+import { inject } from 'mobx-react';
 
-export class FeedbackForm extends React.Component {
+@inject('store')
+export default class FeedbackForm extends React.Component {
   render() {
     return (
       <div>
@@ -11,13 +12,13 @@ export class FeedbackForm extends React.Component {
           <label htmlFor="feedback-username">
             Your name:
             <br />
-            <input id="feedback-username" onChange={this.updateUserName} value={this.props.feedbackStore.userName} />
+            <input id="feedback-username" onChange={this.updateUserName} value={this.props.store.userName} />
           </label>
           <br />
           <label htmlFor="feedback-comment">
             Comments:
             <br />
-            <input id="feedback-comment" onChange={this.updateComment} value={this.props.feedbackStore.comment} />
+            <input id="feedback-comment" onChange={this.updateComment} value={this.props.store.comment} />
           </label>
           <br />
           <button type="submit">Submit</button>
@@ -27,12 +28,10 @@ export class FeedbackForm extends React.Component {
   }
 
   updateUserName(event) {
-    this.props.feedbackStore.setUserName(event.target.value);
+    this.props.store.setUserName(event.target.value);
   }
 
   updateComment(event) {
-    this.props.feedbackStore.setComment(event.target.value);
+    this.props.store.setComment(event.target.value);
   }
 }
-
-export default inject('feedbackStore')(observer(FeedbackForm));
