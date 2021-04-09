@@ -1,10 +1,6 @@
 <h1>Home</h1>
 <a href="<%= new_image_path %>">New Image</a><br>
 
-<% flash.each do |type, message| %>
-  <div class="js-flash-<%= type %>"><%= message %></div>
-<% end %>
-
 <% if @tag && @images.empty? %>
   <p>No image includes the tag #<%= @tag %>. <a href="<%= images_path %>">All images</a></p>
 <% else %>
