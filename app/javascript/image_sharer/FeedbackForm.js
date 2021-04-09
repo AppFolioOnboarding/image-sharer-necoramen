@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import PropTypes from 'prop-types';
+import PostFeedbackService from './PostFeedbackService';
 
 function FeedbackForm({ store }) {
   const updateUserName = (e) => {
@@ -9,12 +10,15 @@ function FeedbackForm({ store }) {
   const updateComment = (e) => {
     store.setComment(e.target.value);
   };
+  const submitFeedback = () => {
+    new PostFeedbackService().postFeedback(store);
+  };
 
   return (
     <div>
       <br />
       <h3>Tell us what you think</h3>
-      <form className="form-group" acceptCharset="UTF-8" method="post">
+      <form className="form-group" acceptCharset="UTF-8">
         <label htmlFor="feedback-username">
           Your name:
           <br />
@@ -27,7 +31,7 @@ function FeedbackForm({ store }) {
           <input id="feedback-comment" onChange={updateComment} />
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button onClick={submitFeedback}>Submit</button>
       </form>
     </div>
   );
